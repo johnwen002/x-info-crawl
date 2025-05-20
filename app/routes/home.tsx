@@ -1,6 +1,5 @@
 import { count } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { useLoaderData } from "react-router";
 import CustomPagination from "~/components/ui/custom-pagination";
 import { articles } from "~/db/schema/twitters";
 import type { Route } from "./+types/home";
@@ -23,21 +22,21 @@ export async function loader({ context, request }: Route.LoaderArgs) {
     .from(articles)
     .offset(page * pageSize)
     .limit(pageSize);
-  const total = await db.select({ value: count() }).from(articles);
+  const total_number = await db.select({ count: count() }).from(articles);
   return {
-    total,
+    total: total_number[0],
     articles: article_results,
   };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  const loadData = useLoaderData();
+  // const loadData = useLoaderData();
   return (
     <>
-      {loadData.map((it: any) => (
+      {loaderData.articles.map((it: any) => (
         <div>{it.full_content}</div>
       ))}
-      <CustomPagination totalPages={loadData.total / 10} />
+      <CustomPagination totalPages={loaderData.total?.count / 10} />
     </>
   );
 }
