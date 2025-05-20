@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8902964f-9850-44a2-9fee-e401be7a5ad2",
-  "prevId": "f5539950-8e61-4041-abc2-54fa33c1845d",
+  "id": "c3df109e-2844-4b14-9f16-be7caf4f100b",
+  "prevId": "f165bbf9-6441-4a9d-ab52-accebe189a31",
   "tables": {
     "github_trendings": {
       "name": "github_trendings",
@@ -65,11 +65,10 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "STRFTIME('%s', 'now')"
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -112,22 +111,13 @@
         },
         "created_at": {
           "name": "created_at",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "STRFTIME('%s', 'now')"
+          "autoincrement": false
         }
       },
-      "indexes": {
-        "articles_sha_unique": {
-          "name": "articles_sha_unique",
-          "columns": [
-            "sha"
-          ],
-          "isUnique": true
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

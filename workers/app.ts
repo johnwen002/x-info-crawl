@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import { createRequestHandler } from "react-router";
+import { getDailyGitHubTrending } from "workers/github-trending";
 import { x_crawler } from "./x";
 declare module "react-router" {
   export interface AppLoadContext {
@@ -17,6 +18,36 @@ const requestHandler = createRequestHandler(
 
 export default {
   async scheduled(request, env, ctx): Promise<void> {
+    if (request.cron === "0 0 * * *") {
+      const allTrending = await getDailyGitHubTrending();
+      const stmts = [];
+      if (allTrending.length > 0) {
+        for (const result of allTrending) {
+          const sql = `
+            INSERT INTO github_trendings (id, name, url, description, language, stars, forks, starsToday, created_at)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+              ON CONFLICT(url) DO NOTHING
+          `;
+          stmts.push(
+            env.DB.prepare(sql).bind(
+              nanoid(),
+              result.name,
+              result.url,
+              result.description,
+              result.language,
+              result.stars,
+              result.forks,
+              result.starsToday,
+              new Date().toISOString()
+            )
+          );
+          await env.DB.batch(stmts);
+        }
+      } else {
+        console.log("Could not fetch trending repositories for all languages.");
+      }
+    }
+
     const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
     const sql = `
         INSERT INTO articles (id, content, sha, created_at)
@@ -32,7 +63,7 @@ export default {
           result.full_text,
           result.sha,
           // await ai(env.OPENROUTER_APIKEY, result.full_text),
-          new Date().getTime()
+          new Date().toISOString()
         )
       );
     }

@@ -29,7 +29,7 @@
     {
       "binding": "DB",
       "database_name": "twitters",
-      "database_id": "8c1fe481-aa11-416b-a676-1145a5262e49",
+      "database_id": "88ababf7-5897-4774-8b57-21288f00b42d",
 			"migrations_dir": "drizzle"
     }
   ],
