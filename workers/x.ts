@@ -155,7 +155,7 @@ function delay(ms: number) {
 export const x_crawler = async (
   id: number,
   x_token: string,
-  page: number = 1
+  page: number = 5
 ) => {
   var url = "https://x.com/i/api/graphql/HeWHY26ItCfUmm1e6ITjeA/UserTweets";
 
