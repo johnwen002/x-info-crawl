@@ -1,6 +1,6 @@
 import { createRequestHandler } from "react-router";
 import { x_crawler } from "./x";
-
+import { nanoid } from 'nanoid'
 declare module "react-router" {
   export interface AppLoadContext {
     cloudflare: {
@@ -24,8 +24,8 @@ export default {
   ): Promise<void> {
     const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
     const sql = `
-        INSERT INTO articles (content, sha, created_at)
-        VALUES (?, ?, ?)
+        INSERT INTO articles (id, content, sha, created_at)
+        VALUES (?, ?, ?, ?)
         ON CONFLICT(sha) DO NOTHING
       `;
     // 2. Prepare batch bindings
@@ -33,6 +33,7 @@ export default {
     for (const result of all_results) {
       stmts.push(
         env.DB.prepare(sql).bind(
+          nanoid(), 
           result.full_text,
           result.sha,
           // await ai(env.OPENROUTER_APIKEY, result.full_text),
