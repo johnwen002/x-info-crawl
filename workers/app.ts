@@ -1,6 +1,6 @@
+import { nanoid } from "nanoid";
 import { createRequestHandler } from "react-router";
 import { x_crawler } from "./x";
-import { nanoid } from 'nanoid'
 declare module "react-router" {
   export interface AppLoadContext {
     cloudflare: {
@@ -15,13 +15,8 @@ const requestHandler = createRequestHandler(
   import.meta.env.MODE
 );
 
-
 export default {
-   async scheduled(
-    request,
-    env,
-    ctx
-  ): Promise<void> {
+  async scheduled(request, env, ctx): Promise<void> {
     const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
     const sql = `
         INSERT INTO articles (id, content, sha, created_at)
@@ -33,11 +28,11 @@ export default {
     for (const result of all_results) {
       stmts.push(
         env.DB.prepare(sql).bind(
-          nanoid(), 
+          nanoid(),
           result.full_text,
           result.sha,
           // await ai(env.OPENROUTER_APIKEY, result.full_text),
-          new Date().toISOString()
+          new Date().getTime()
         )
       );
     }
