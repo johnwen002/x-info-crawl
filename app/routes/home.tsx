@@ -1,7 +1,10 @@
-import { drizzle } from "drizzle-orm/d1";
-import type { Route } from "./+types/home";
-import { articles } from "~/db/schema/twitters";
 import { count } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { it } from "node:test";
+import { useLoaderData } from "react-router";
+import CustomPagination from "~/components/ui/custom-pagination";
+import { articles } from "~/db/schema/twitters";
+import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,21 +13,32 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ context, request}: Route.LoaderArgs) {  
-      const url = new URL(request.url); 
-      const searchParams = url.searchParams;
-      const page = parseInt(searchParams.get("page") || "0");
-      const pageSize = parseInt(searchParams.get("pageSize") || "10");
-      const db = drizzle(context.cloudflare.env.DB);
-      const article_results = await db.select().from(articles).offset(page * pageSize).limit(pageSize)
-      const total = await db.select({value: count()}).from(articles); 
-      return {
-        total, 
-        articles: article_results
-      }
-
+export async function loader({ context, request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const page = parseInt(searchParams.get("page") || "0");
+  const pageSize = parseInt(searchParams.get("pageSize") || "10");
+  const db = drizzle(context.cloudflare.env.DB);
+  const article_results = await db
+    .select()
+    .from(articles)
+    .offset(page * pageSize)
+    .limit(pageSize);
+  const total = await db.select({ value: count() }).from(articles);
+  return {
+    total,
+    articles: article_results,
+  };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  return <></>
+  const loadData = useLoaderData();
+  return (
+    <>
+      {loadData.articles.map((it) => (
+        <div>{it.content}</div>
+      ))}
+      <CustomPagination totalPages={it.total / 10} />
+    </>
+  );
 }
