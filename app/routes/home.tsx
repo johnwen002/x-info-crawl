@@ -34,8 +34,8 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const loadData = useLoaderData();
   return (
     <>
-      {loadData.articles.map((it: any) => (
-        <div>{it.content}</div>
+      {loadData.map((it: any) => (
+        <div>{it.full_content}</div>
       ))}
       <CustomPagination totalPages={loadData.total / 10} />
     </>
