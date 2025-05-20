@@ -1,1 +1,0 @@
-CREATE UNIQUE INDEX IF NOT EXISTS `github_trendings_url_unique` ON `github_trendings` (`url`);

@@ -1,1 +1,0 @@
-CREATE UNIQUE INDEX IF NOT EXISTS `articles_sha_unique` ON `articles` (`sha`);

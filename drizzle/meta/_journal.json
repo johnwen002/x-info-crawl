@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1747728231774,
-      "tag": "0000_awesome_chameleon",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1747728368741,
-      "tag": "0001_wakeful_aqueduct",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1747728542455,
-      "tag": "0002_curved_hannibal_king",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1747728567150,
-      "tag": "0003_military_scarlet_witch",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1747728590318,
-      "tag": "0004_soft_hobgoblin",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1747728613351,
-      "tag": "0005_conscious_loa",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "6",
-      "when": 1747728620699,
-      "tag": "0006_demonic_jasper_sitwell",
+      "when": 1747728904290,
+      "tag": "0000_bent_mister_fear",
       "breakpoints": true
     }
   ]
