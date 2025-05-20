@@ -8,9 +8,15 @@
     "deploy": "npm run build && wrangler deploy",
     "dev": "react-router dev",
     "preview": "npm run build && vite preview",
-    "typecheck": "npm run cf-typegen && react-router typegen && tsc -b"
+    "typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 migrations apply --local DB",
+    "db:migrate-production": "drizzle-kit migrate"
   },
   "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
     "isbot": "^5.1.27",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -23,7 +29,9 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "drizzle-kit": "^0.31.1",
     "tailwindcss": "^4.1.4",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
     "vite-tsconfig-paths": "^5.1.4",
