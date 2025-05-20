@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `articles_sha_unique` ON `articles` (`sha`);

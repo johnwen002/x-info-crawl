@@ -1,5 +1,4 @@
 import axios from "axios";
-// import OpenAI from "openai";
 import { calculateStringHash } from "./utils";
 
 async function gatherLegacyFromData(
@@ -256,47 +255,3 @@ export const x_crawler = async (
 
   return all_results;
 };
-
-// export const manage_x_content = async (
-//   x_user_id: number,
-//   x_token: string,
-//   apiKey: string
-// ) => {
-//   const response = await x_crawler(x_user_id, x_token);
-//   const itemSchema = z.object({
-//     user_name: z.string(),
-//     content: z.string(),
-//     media_urls: z.array(z.string()),
-//     summary: z.string(),
-//   });
-//   const schema = z.object({
-//     results: z.array(itemSchema),
-//   });
-
-//   const system_message = `
-//   资料内容：${JSON.stringify(response)}
-
-//   你是一个乐于助人的小助手。 现在你需要根据材料内容帮我整理资料。 要求如下：
-//   1. 严格根据材料内容， 不要胡编乱造，一般有20条内容， 确保不要遗漏！
-//   2. 文字内容要全文，要完整，如果带有短链接， 要将短链接替换成对应的正常链接。 正常的链接从对应的 JSON 里面寻找， 要一一对应，不要对应错误！
-//   3. 根据你收集到的信息，生成小红书式的有意思的总结. 要幽默风趣，带上表情符号
-//   `;
-
-//   // console.log(system_message);
-//   const openai = new OpenAI({
-//     baseURL: "https://openrouter.ai/api/v1",
-//     apiKey,
-//   });
-
-//   // const ai_res = await genText(apiKey, system_message, schema);
-//   const completion = await openai.beta.chat.completions.parse({
-//     model: "qwen/qwen3-235b-a22b",
-//     messages: [
-//       { role: "system", content: system_message },
-//       { role: "user", content: "start!" },
-//     ],
-//   });
-//   console.log("++++++++++++++++++");
-//   console.log(completion);
-//   return completion.choices[0].message.content;
-// };
