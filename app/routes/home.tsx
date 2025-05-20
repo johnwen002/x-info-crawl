@@ -1,6 +1,5 @@
 import { count } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { it } from "node:test";
 import { useLoaderData } from "react-router";
 import CustomPagination from "~/components/ui/custom-pagination";
 import { articles } from "~/db/schema/twitters";
@@ -35,10 +34,10 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const loadData = useLoaderData();
   return (
     <>
-      {loadData.articles.map((it) => (
+      {loadData.articles.map((it: any) => (
         <div>{it.content}</div>
       ))}
-      <CustomPagination totalPages={it.total / 10} />
+      <CustomPagination totalPages={loadData.total / 10} />
     </>
   );
 }
