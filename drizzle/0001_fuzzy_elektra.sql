@@ -1,11 +1,12 @@
 CREATE TABLE `twitters` (
 	`id` text PRIMARY KEY NOT NULL,
 	`content` text NOT NULL,
-	`sha` text UNIQUE,
+	`sha` text,
 	`created_at` text
 );
--- --> statement-breakpoint
--- CREATE UNIQUE INDEX `twitters_sha_unique` ON `twitters` (`sha`);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `twitters_sha_unique` ON `twitters` (`sha`);
+
 
 
 CREATE VIRTUAL TABLE IF NOT EXISTS twitters_fts USING fts5(
