@@ -49,8 +49,8 @@ export default {
     }
 
     const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
-    const sql = `
-        INSERT INTO articles (id, content, sha, created_at)
+    const article_sql = `
+        INSERT INTO twitters (id, content, sha, created_at)
         VALUES (?, ?, ?, ?)
         ON CONFLICT(sha) DO NOTHING
       `;
@@ -58,11 +58,10 @@ export default {
     const stmts = [];
     for (const result of all_results) {
       stmts.push(
-        env.DB.prepare(sql).bind(
+        env.DB.prepare(article_sql).bind(
           nanoid(),
           result.full_text,
           result.sha,
-          // await ai(env.OPENROUTER_APIKEY, result.full_text),
           new Date().toISOString()
         )
       );

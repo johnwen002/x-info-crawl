@@ -8,6 +8,13 @@
       "when": 1747728904290,
       "tag": "0000_bent_mister_fear",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1747808076770,
+      "tag": "0001_fuzzy_elektra",
+      "breakpoints": true
     }
   ]
 }
