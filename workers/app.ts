@@ -47,27 +47,29 @@ export default {
         console.log("Could not fetch trending repositories for all languages.");
       }
     }
-
-    const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
-    const article_sql = `
-        INSERT INTO twitters (id, content, sha, created_at)
-        VALUES (?, ?, ?, ?)
-        ON CONFLICT(sha) DO NOTHING
-      `;
-    // 2. Prepare batch bindings
-    const stmts = [];
-    for (const result of all_results) {
-      stmts.push(
-        env.DB.prepare(article_sql).bind(
+    try {
+      const all_results = await x_crawler(3190634521, env.X_TOKEN, 10);
+      const article_sql = `
+            INSERT INTO twitters (id, content, sha, created_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(sha) DO NOTHING
+          `;
+      // 2. Prepare batch bindings
+      const stmts = [];
+      for (const result of all_results) {
+        let stmt = env.DB.prepare(article_sql).bind(
           nanoid(),
           result.full_text,
           result.sha,
           new Date().toISOString()
-        )
-      );
+        );
+        stmts.push(stmt);
+      }
+      console.log(all_results);
+      await env.DB.batch(stmts);
+    } catch (e) {
+      console.log("Error in x_crawler:", e);
     }
-
-    await env.DB.batch(stmts);
   },
   async fetch(request, env, ctx) {
     return requestHandler(request, {
